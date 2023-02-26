@@ -4,7 +4,7 @@ T‰m‰ batch-sripti tarkistaa s‰hkˆn hinnan palvelusta spot-hinta.fi. Jos hinta on
 
 Skripti price-scheduler.bat k‰ytt‰‰ hintojen noutamiseen Wget-ohjelmaa (https://eternallybored.org/misc/wget/). Lataa wget.exe samaan kansioon skriptin kanssa tai varmista, ett‰ wget toimii komentokehoitteesta. Batch-skriptit eiv‰t tue laskutoimituksissa desimaalilukuja, joten laskutoimituksiin k‰ytet‰‰ ohjelmaa Command line calculator (https://cmdlinecalc.sourceforge.io/). Kopioi laskurin calc.exe samaan kansioon skriptin kanssa v‰ltt‰‰ksesi ongelmat, koska Windowsin oma laskuri on myˆs calc.exe.
 
-Apuskripti hidden-price-scheduler.bat k‰ynnist‰‰ skriptin price-scheduler.bat piilotettuun ikkunaan, jolloin skripti toimii ik‰‰n kuin Windowsin taustapalvelu. T‰h‰n k‰ytet‰‰n ohjelmaa CMDH(https://web.archive.org/web/20190915154950/http://www.gate2.net:80/tools/cmdh/cmdh.html).
+Apuskripti hidden-price-scheduler.bat k‰ynnist‰‰ skriptin price-scheduler.bat piilotettuun ikkunaan, jolloin skripti toimii ik‰‰n kuin Windowsin taustapalvelu. T‰h‰n k‰ytet‰‰n ohjelmaa CMDH (https://web.archive.org/web/20190915154950/http://www.gate2.net:80/tools/cmdh/cmdh.html).
 
 Huom! T‰m‰ skripti ei ole k‰ynyt l‰pi huolellista testausta eik‰ sit‰ pid‰ k‰ytt‰‰ mihink‰‰n vaativaan k‰yttˆˆn.
 
