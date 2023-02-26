@@ -1,7 +1,5 @@
-2023-02-26 14:14:27 Updating Json file JustNow.json.
-2023-02-26 14:17:35 [price 0.0408] Started program C:\Ohjelmatiedostot\Miners\hodlminer2018v3\POOL-run - Solo Mining 2nd address.bat
-2023-02-26 15:00:05 Updating Json file JustNow.json.
-2023-02-26 15:00:06 [price 0.0600] Stopped process hodlminer-avx2.exe
-2023-02-26 16:00:10 Updating Json file JustNow.json.
-2023-02-26 17:00:14 Updating Json file JustNow.json.
-2023-02-26 18:00:02 Updating Json file JustNow.json.
+2023-02-26 19:13:14 Updating Json file JustNow.json.
+2023-02-26 19:19:04 Starting price-scheduler.bat
+2023-02-26 19:19:19 [price 0.1691] Started program C:\Ohjelmatiedostot\Miners\hodlminer2018v3\POOL-run - Solo Mining 2nd address.bat
+2023-02-26 19:19:36 [price 0.1691] Stopped process hodlminer-avx2.exe
+2023-02-26 19:20:00 Starting price-scheduler.bat main loop.

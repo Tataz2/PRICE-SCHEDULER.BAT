@@ -31,6 +31,9 @@ set RefreshSeconds=30
 goto :CheckRequiredFiles
 :ReturnPointCheckRequiredFiles
 
+REM %~nx0 is the batch file name.
+call :WriteLog "Starting %~nx0 main loop."
+
 :START
 cls 
  
@@ -160,6 +163,7 @@ REM echo FileJustNow: %FileJustNow%
 
 if not exist %FileJustNow% (
 	echo Json file %FileJustNow% not found. Downloading file...
+	call :WriteLog "Json file %FileJustNow% not found. Downloading file..."
 	wget -O %FileJustNow% %UrlSpottiHinta%
 )
 
