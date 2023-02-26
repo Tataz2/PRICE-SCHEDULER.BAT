@@ -31,7 +31,7 @@ set RefreshSeconds=30
 goto :CheckRequiredFiles
 :ReturnPointCheckRequiredFiles
 
-REM %~nx0 is the batch file name.
+REM %~nx0 is the filename of this batch script..
 call :WriteLog "Starting %~nx0 main loop."
 
 :START
