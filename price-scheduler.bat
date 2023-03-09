@@ -60,6 +60,9 @@ REM echo DateString: "%DateString%"
 echo -------------------- GetCurrentPrice Starts --------------------
 REM Get current price in euros. Returns -1 if getting price fails.
 call :GetPriceByDate "!DateString!" PriceWithTax
+if "!PriceWithTax!" == "-1"  (
+	set "PriceWithTax=%DefaultPrice%"
+)
 echo -------------------- GetCurrentPrice Ends--------------------
 
 REM Convert decimal number to integer by multiplying by 10000.
