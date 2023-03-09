@@ -106,7 +106,8 @@ REM "notepad.exe","14320","RDP-Tcp#23","1","10 516 K"
 FOR /F "tokens=1,2 delims=," %%X IN (' TASKLIST /NH /FO CSV  /FI "imagename eq %ProcessName%" ') DO (
 	REM %%X includes quotes.
 	IF %%X == "%ProcessName%" (
-		echo Process %ProcessName% IS running^^!
+		echo Process %ProcessName% IS already running^^!
+		call :WriteLog "[price %PriceWithTax%] Process "%ProcessName%" is already running. No need to start program %ProgramToRun%"
 		set "ProgramRunning=TRUE"
 	) ELSE (
 		echo Process %ProcessName% IS NOT running^^!
@@ -127,6 +128,7 @@ FOR /F "tokens=1,2 delims=," %%X IN (' TASKLIST /NH /FO CSV  /FI "imagename eq %
 	REM %%X includes quotes.
 	IF NOT %%X == "%ProcessName%" (
 		echo Process %ProcessName% is not running. No shutdown needed.
+		call :WriteLog "[price %PriceWithTax%] Process %ProcessName%" is not running. Not shutdown needed.
 		set "ProgramRunning=FALSE"
 		GOTO :eof
 	) 
@@ -370,10 +372,6 @@ IF NOT EXIST calc.exe (
 )
 
 goto :ReturnPointCheckRequiredFiles
-
-
-:END
-
 
 
 :END
