@@ -13,4 +13,5 @@ Huom! Tämä skripti ei ole käynyt läpi huolellista testausta eikä sitä pidä käytt
 ## Muutoksia
 
 Versio 0.1: Palvelu spot-hinta.fi ei hetkellisesti vastannut, joten varapalveluksi on lisätty porssisahko.net.
+
 Versio 0.2: Hinnan tarkistaminen on koodattu uudelleen.
