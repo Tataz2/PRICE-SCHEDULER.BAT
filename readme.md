@@ -4,7 +4,7 @@ Skripti price-scheduler.bat tarkistaa s‰hkˆn hinnan palvelusta spot-hinta.fi. Jo
 
 Skripti k‰ytt‰‰ hintojen noutamiseen Wget-ohjelmaa (https://eternallybored.org/misc/wget/). Lataa wget.exe samaan kansioon skriptin kanssa tai varmista, ett‰ wget toimii komentokehoitteesta. Batch-skriptit eiv‰t tue laskutoimituksissa desimaalilukuja, joten laskutoimituksiin k‰ytet‰‰ ohjelmaa Command line calculator (https://cmdlinecalc.sourceforge.io/). Kopioi laskurin calc.exe samaan kansioon skriptin kanssa v‰ltt‰‰ksesi ongelmat, koska Windowsin oma laskuri on myˆs calc.exe.
 
-Ohjelman k‰ynniss‰olo tarkistetaan 30 sekunnin v‰lein. Samoin s‰hkˆnhinta tarkistetaan tiedostosta JustNow.json 30 sekunnin v‰lein. Jos json-tiedoston DateTime ei vastaa tunnin tarkkuudella tietokoneen aikaa, ladataan json tiedosto uudelleen. 
+Ohjelman k‰ynniss‰olo tarkistetaan 30 sekunnin v‰lein. Nykyisen p‰iv‰n ja seuraavan p‰iv‰n, jos saatavilla, hintatiedot p‰ivitet‰‰n tunnin v‰lein tiedostoon TodayAndDayforward.json. Jos Json-tiedosto p‰‰see vanhenemaan eik‰ palvelu spot-hinta.fi vastaa, kysyt‰‰n hinta palvelusta porssisahko.net.
 
 Apuskripti hidden-price-scheduler.bat k‰ynnist‰‰ skriptin price-scheduler.bat piilotettuun ikkunaan, jolloin skripti toimii ik‰‰n kuin Windowsin taustapalvelu. T‰h‰n k‰ytet‰‰n ohjelmaa CMDH (https://web.archive.org/web/20190915154950/http://www.gate2.net:80/tools/cmdh/cmdh.html).
 
@@ -12,4 +12,5 @@ Huom! T‰m‰ skripti ei ole k‰ynyt l‰pi huolellista testausta eik‰ sit‰ pid‰ k‰ytt
 
 ## Muutoksia
 
-Versio 0.1: Palvelu spot-hinta.fi vaikuttaa ep‰luotettavalle, joten varapalveluksi on lis‰tty porssisahko.net.
+Versio 0.1: Palvelu spot-hinta.fi ei hetkellisesti vastannut, joten varapalveluksi on lis‰tty porssisahko.net.
+Versio 0.2: Hinnan tarkistaminen on koodattu uudelleen.
