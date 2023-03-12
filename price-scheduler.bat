@@ -57,6 +57,8 @@ for /F "tokens=1,2 delims==" %%A in ('wmic os get LocalDateTime /VALUE 2^>NUL') 
 set "DateString=!DateString:~0,10!"
 REM echo DateString: "%DateString%"
 
+cls
+
 echo -------------------- GetCurrentPrice Starts --------------------
 REM Get current price in euros. Returns -1 if getting price fails.
 call :GetPriceByDate "!DateString!" PriceWithTax
