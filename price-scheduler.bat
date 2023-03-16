@@ -154,13 +154,13 @@ FOR /F "tokens=1,2 delims=," %%X IN (' TASKLIST /NH /FO CSV  /FI "imagename eq %
 	REM %%X includes quotes.
 	IF %%X == "%ProcessName%" (
 		echo Process %ProcessName% IS already running^^!
-		call :WriteLog "[price %PriceWithTax%] Process "%ProcessName%" is already running. No need to start program %ProgramToRun%"
+		call :WriteLog "[price %PriceWithTax%, rank %CurrentRank%] Process "%ProcessName%" is already running. No need to start program %ProgramToRun%"
 		set "ProgramRunning=TRUE"
 	) ELSE (
 		echo Process %ProcessName% IS NOT running^^!
 		echo Start program %ProgramToRun%
 		
-		call :WriteLog "[price %PriceWithTax%] Started program %ProgramToRun%"
+		call :WriteLog "[price %PriceWithTax%, rank %CurrentRank%] Started program %ProgramToRun%"
 		start /min "%ProcessName%" "%ProgramToRun%"
 		set "ProgramRunning=TRUE"
 	)
@@ -175,7 +175,7 @@ FOR /F "tokens=1,2 delims=," %%X IN (' TASKLIST /NH /FO CSV  /FI "imagename eq %
 	REM %%X includes quotes.
 	IF NOT %%X == "%ProcessName%" (
 		echo Process %ProcessName% is not running. No shutdown needed.
-		call :WriteLog "[price %PriceWithTax%] Process %ProcessName%" is not running. Not shutdown needed.
+		call :WriteLog "[price %PriceWithTax%, rank %CurrentRank%] Process %ProcessName%" is not running. Not shutdown needed.
 		set "ProgramRunning=FALSE"
 		GOTO :eof
 	) 
@@ -189,12 +189,12 @@ FOR /F "tokens=1,2 delims=:" %%A IN (' TASKKILL /IM "%ProcessName%" ') DO (
  	IF "%%A" == "SUCCESS" (
  			echo Process %ProcessName%" was shutdown successfully.
  			set "ProgramRunning=FALSE"
-			call :WriteLog "[price %PriceWithTax%] Stopped process %ProcessName%"
+			call :WriteLog "[price %PriceWithTax%, rank %CurrentRank%] Stopped process %ProcessName%"
  		) ELSE (
  			echo Process did not shutdown. Forcing shutdown...
  			TASKKILL /IM %ProcessName%"
  			set "ProgramRunning=FALSE"
-			call :WriteLog "[price %PriceWithTax%] Killed process %ProcessName%"
+			call :WriteLog "[price %PriceWithTax%, rank %CurrentRank%] Killed process %ProcessName%"
  		)
 )
 
