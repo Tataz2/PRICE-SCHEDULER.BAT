@@ -2,16 +2,27 @@
 SETLOCAL EnableDelayedExpansion
 cd /D "%~dp0"
 
-REM Version 0.2
-REM If current electricity price is lower or equal than PriceThreshold, the script will start %ProgramToRun%.
-REM If current electricity price is higher than PriceThreshold, the script will stop %ProcessName%.
-REM The current price is checked fron https://api.spot-hinta.fi/TodayAndDayforward. Spot-hinta.fi is/was unreliable so added https://api.porssisahko.net as a backup.
+REM Version 0.3
+
+REM Condition 1:
+REM If current electricity price is lower or equal than PriceThreshold, ConditionPrice is TRUE.
+REM If current electricity price is higher than PriceThreshold, ConditionPrice is FALSE.
+REM Condition 2:
+REM If current rank is lower or equal than RankThreshold, ConditionRank is TRUE.
+REM If current rank is higher than RankThreshold, ConditionRank is TRUE.
+REM Result:
+REM If ConditionPrice and ConditionRank is FALSE, the script will stop %ProcessName%. Otherwise the script will start %ProgramToRun%.
+
+REM The current price is checked fron https://api.spot-hinta.fi/TodayAndDayforward. Spot-hinta.fi is/was unreliable so added https://api.porssisahko.net as a backup. Rank is not get from porssisahko.net.
 
 REM Command line calculator (https://cmdlinecalc.sourceforge.io/) and Wget (https://eternallybored.org/misc/wget/) required.
 REM Copy calc.exe and wget.exe to the same directory as thisS batch script. 
 
-REM Start miner is price in euros is lower or equal than PriceThreshold. Max 4 decimals. Includes taxes.
-set PriceThreshold=0.0400
+REM Start ProgramToRun if price in euros is lower or equal than PriceThreshold. Max 4 decimals. Includes taxes.
+set PriceThreshold=0.0300
+
+REM Start ProgramToRun is rank is lower or equal than RankThreshold. Rank 1 is the cheapest of 24 hours, 2 is the second cheapest etc.
+set RankThreshold=4
 
 REM This is the command to be run when pice is low.
 set "ProgramToRun=C:\Ohjelmatiedostot\Miners\hodlminer2018v3\POOL-run - Solo Mining 2nd address.bat"
@@ -22,18 +33,23 @@ set "ProcessName=hodlminer-avx2.exe"
 REM Log file.
 set "LogFile=price-scheduler.log"
 
-REM Default price which is used if current price is not solved. Eg. -1 if you want to run %ProgramToRun% when not price is not solves. Eg. 999 if you want to stop %ProcessName%.
+REM Default price which is used if current price is not solved. Eg. -1 if you want to run %ProgramToRun% when price is not solved. Eg. 999 if you want to stop %ProcessName%.
 set DefaultPrice=999
 
+REM Default rank which is used if current rank is not solved. Eg. 24 if you want to run %ProgramToRun% when price is not solvess Eg. 0 if you want to stop %ProcessName%.
+set DefaultRank=0
 
 REM -------------------------- CODE STARTS --------------------------
 
 set ProgramRunning=FALSE
-set PriceUnderThreshold=FALSE
+set ConditionPrice=FALSE
+set ConditionRank=FALSE
 set RefreshSeconds=30
 
 set "UrlSpottiHinta=https://api.spot-hinta.fi/TodayAndDayforward"
 set FileJson=TodayAndDayforward.json
+
+set CurrentRank=-1
 
 REM An hour accuracy 2023022220 (yyymmddhh)
 set "LastJsonUpdate="
@@ -61,9 +77,12 @@ cls
 
 echo -------------------- GetCurrentPrice Starts --------------------
 REM Get current price in euros. Returns -1 if getting price fails.
-call :GetPriceByDate "!DateString!" PriceWithTax
+call :GetPriceByDate "!DateString!" PriceWithTax CurrentRank
 if "!PriceWithTax!" == "-1"  (
 	set "PriceWithTax=%DefaultPrice%"
+)
+if "!CurrentRank!" == "-1"  (
+	set "CurrentRank=%DefaultRank%"
 )
 echo -------------------- GetCurrentPrice Ends--------------------
 
@@ -74,20 +93,43 @@ for /f "tokens=*" %%i in ('calc %PriceThreshold%*10000 ') do set PriceThreshold1
 REM IF price is lower or equal than threshold start the program. Otherwise stop the program.
 IF %PriceWithTax10000% LEQ %PriceThreshold10000%  (
 	echo Current price %PriceWithTax% is LOWER than price threshold %PriceThreshold%.	
-	set PriceUnderThreshold=TRUE
+	set ConditionPrice=TRUE
+
+) ELSE (
+	echo Current price %PriceWithTax% is HIGHER than price threshold %PriceThreshold%.	
+	set ConditionPrice=FALSE
+)
+
+REM IF rank is lower or equal than threshold start the program. Otherwise stop the program.
+IF %CurrentRank% LEQ %RankThreshold%  (
+	echo Current rank %CurrentRank% is LOWER than rank threshold %RankThreshold%.	
+	set ConditionRank=TRUE
+
+) ELSE (
+	echo Current rank %CurrentRank% is HIGHER than rank threshold %RankThreshold%.	
+	set ConditionRank=FALSE
+)
+
+
+REM Stop the process if ConditionRank and ConditionPrice is FALSE. Otherwise start the program.
+if "!ConditionPrice!" == "FALSE" (
+	if "!ConditionRank!" == "FALSE" (
+		IF "!ProgramRunning!" == "TRUE" (
+			echo Shutting down %ProcessName%
+			call :StopProgram
+		)
+	) else (
+		IF "!ProgramRunning!" == "FALSE" (
+			echo Starting %ProcessName%
+			call :RunProgram
+		)
+	)
+) else (
 	IF "!ProgramRunning!" == "FALSE" (
 		echo Starting %ProcessName%
 		call :RunProgram
 	)
-) ELSE (
-	echo Current price %PriceWithTax% is HIGHER than price threshold %PriceThreshold%.	
-	set PriceUnderThreshold=FALSE
-	IF "!ProgramRunning!" == "TRUE" (
-		echo Shutting down %ProcessName%
-		call :StopProgram
-	)
 )
-
 
 
 REM echo DateTime: %DateTime%
@@ -195,9 +237,10 @@ SET SearchDate=%~1
 SET SearchDate=%SearchDate:~0,4%-%SearchDate:~4,2%-%SearchDate:~6,2%T%SearchDate:~8,2%
 
 set "PriceWithTax=-1"
+set "CurrentRank=-1"
 
-REM Limits that only two lines are read after finding correct DateTime.
-SET LinesToRead=2
+REM Limits that only four lines are read (from Rank to PriceWithTax).
+SET LinesToRead=4
 
 echo SearchDate: %SearchDate%
 
@@ -210,6 +253,9 @@ for /f "delims=:" %%A in (' findstr /n /i /c:"!SearchDate!" "%FileJson%" ') do (
 	echo SearchDate !SearchDate! found at line !MatchedLine!.
 )
 
+REM Move two lines up so Rank can be read.
+set /a MatchedLine=!MatchedLine! - 2
+
 REM Let's skip for loop if no match.
 IF !MatchedLine! LEQ -1 GOTO :BreakGetPriceByDate
 
@@ -217,17 +263,24 @@ REM Delim is : and space. Read only two lines after MatchedLine.
 FOR /F "skip=%MatchedLine% tokens=1-2 delims=: " %%H IN (' type %FileJson% ') DO (
 	SET /A LinesToRead=!LinesToRead!-1
 	REM echo LinesToRead: !LinesToRead!
-	REM echo "%%H" "%%I"
+	REM echo %%~H %%I
 	REM ~ stips extra quotes.
 	IF "%%~H"=="PriceWithTax" (
 		set PriceWithTax=%%I
 		REM Remove possible , and spaces.
 		set PriceWithTax=!PriceWithTax:,=!
 		set PriceWithTax=!PriceWithTax: =!
-REM		echo PriceWithTax: "!PriceWithTax!"
+		REM	echo PriceWithTax: "!PriceWithTax!"
+	)
+	IF "%%~H"=="Rank" (
+		set CurrentRank=%%I
+		REM Remove possible , and spaces.
+		set CurrentRank=!CurrentRank:,=!
+		set CurrentRank=!CurrentRank: =!
+		REM	echo PriceWithTax: "!PriceWithTax!"
 	)
 	IF !LinesToRead! LEQ 0 GOTO :BreakGetPriceByDate
-	)
+	
 )
 
 :BreakGetPriceByDate
@@ -271,6 +324,7 @@ IF 1%PriceWithTax10000% NEQ +1%PriceWithTax10000% (
 
 ( endlocal
 	set "%2=%PriceWithTax%"
+	set "%3=%CurrentRank%"
 )
 goto :eof
 
