@@ -22,7 +22,7 @@ REM Start ProgramToRun if price in euros is lower or equal than PriceThreshold. 
 set PriceThreshold=0.0300
 
 REM Start ProgramToRun is rank is lower or equal than RankThreshold. Rank 1 is the cheapest of 24 hours, 2 is the second cheapest etc.
-set RankThreshold=4
+set RankThreshold=2
 
 REM This is the command to be run when pice is low.
 set "ProgramToRun=C:\Ohjelmatiedostot\Miners\hodlminer2018v3\POOL-run - Solo Mining 2nd address.bat"

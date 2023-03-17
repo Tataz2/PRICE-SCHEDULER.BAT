@@ -134,3 +134,30 @@
 2023-03-16 17:30:59 [price 0.1026] Started program C:\Ohjelmatiedostot\Miners\hodlminer2018v3\POOL-run - Solo Mining 2nd address.bat
 2023-03-16 17:43:23 [price 0.1026] Stopped process hodlminer-avx2.exe
 2023-03-16 17:46:01 [price 0.1026], rank 3] Started program C:\Ohjelmatiedostot\Miners\hodlminer2018v3\POOL-run - Solo Mining 2nd address.bat
+2023-03-16 17:47:56 [price 0.1026, rank 13] Stopped process hodlminer-avx2.exe
+2023-03-16 17:55:51 Starting price-scheduler.bat main loop.
+2023-03-16 17:55:51 Updating Json file TodayAndDayforward.json.
+2023-03-16 18:00:25 Updating Json file TodayAndDayforward.json.
+2023-03-16 19:00:00 Updating Json file TodayAndDayforward.json.
+2023-03-16 20:00:07 Updating Json file TodayAndDayforward.json.
+2023-03-16 21:00:22 Updating Json file TodayAndDayforward.json.
+2023-03-16 22:00:18 Updating Json file TodayAndDayforward.json.
+2023-03-16 23:00:23 Updating Json file TodayAndDayforward.json.
+2023-03-17 00:00:25 Updating Json file TodayAndDayforward.json.
+2023-03-17 01:00:28 Updating Json file TodayAndDayforward.json.
+2023-03-17 02:00:00 Updating Json file TodayAndDayforward.json.
+2023-03-17 03:00:26 Updating Json file TodayAndDayforward.json.
+2023-03-17 04:00:22 Updating Json file TodayAndDayforward.json.
+2023-03-17 05:00:16 Updating Json file TodayAndDayforward.json.
+2023-03-17 06:00:14 Updating Json file TodayAndDayforward.json.
+2023-03-17 07:00:12 Updating Json file TodayAndDayforward.json.
+2023-03-17 08:00:06 Updating Json file TodayAndDayforward.json.
+2023-03-17 09:00:07 Updating Json file TodayAndDayforward.json.
+2023-03-17 10:00:12 Updating Json file TodayAndDayforward.json.
+2023-03-17 11:00:23 Updating Json file TodayAndDayforward.json.
+2023-03-17 12:00:19 Updating Json file TodayAndDayforward.json.
+2023-03-17 13:00:18 Updating Json file TodayAndDayforward.json.
+2023-03-17 14:00:12 Updating Json file TodayAndDayforward.json.
+2023-03-17 15:00:17 Updating Json file TodayAndDayforward.json.
+2023-03-17 16:00:09 Updating Json file TodayAndDayforward.json.
+2023-03-17 17:00:13 Updating Json file TodayAndDayforward.json.
