@@ -59,7 +59,7 @@ goto :CheckRequiredFiles
 
 REM %~nx0 is the filename of this batch script..
 call :WriteLog "Starting %~nx0 main loop."
-
+call :WriteLog "Price threshold is %PriceThreshold% and rank threshold is %RankThreshold%."
 
 
 
@@ -309,6 +309,8 @@ if "!PriceWithTax!" == "-1"  (
 			set PriceWithTax=-1
 		)
 	)
+	REM echo Got price !PriceWithTax! from  api.porssisahko.net.
+	call :WriteLog "Got price !PriceWithTax! from  api.porssisahko.net."
 )
 
 REM Check if price is valid positive number with max four decimal accuracy.
@@ -372,7 +374,7 @@ if "!DateString!" == "!LastJsonUpdate!" (
 	REM Last update !LastJsonUpdate!
 ) else (
 	echo Updating Json file... Last update !LastJsonUpdate!
-	call :WriteLog "Updating Json file %FileJson%."
+	REM call :WriteLog "Downloading Json file %FileJson%."
 	wget --tries=5 -O %FileJson%.temp %UrlSpottiHinta%
 	
 	REM Get %FileJson% file size in bytes.
@@ -385,6 +387,7 @@ if "!DateString!" == "!LastJsonUpdate!" (
 		REM Downloaded Json file ok, replace old file.
 		move /Y %FileJson%.temp %FileJson%
 		echo Update successful.
+		call :WriteLog "Updating Json file %FileJson% successfull."
 		set LastJsonUpdate=!DateString!
 	)
 )	
