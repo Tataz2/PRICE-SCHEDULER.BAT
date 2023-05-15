@@ -2,7 +2,7 @@
 SETLOCAL EnableDelayedExpansion
 cd /D "%~dp0"
 
-REM Version 0.3
+REM Version 0.4
 
 REM Condition 1:
 REM If current electricity price is lower or equal than PriceThreshold, ConditionPrice is TRUE.
@@ -309,8 +309,8 @@ if "!PriceWithTax!" == "-1"  (
 			set PriceWithTax=-1
 		)
 	)
-	REM echo Got price !PriceWithTax! from  api.porssisahko.net.
-	call :WriteLog "Got price !PriceWithTax! from  api.porssisahko.net."
+	REM echo Got price !PriceWithTax! from api.porssisahko.net.
+	call :WriteLog "Got price !PriceWithTax! from api.porssisahko.net."
 )
 
 REM Check if price is valid positive number with max four decimal accuracy.
@@ -356,9 +356,9 @@ if not exist %FileJson% (
 	REM Get %FileJson% file size in bytes.
 	for /F "usebackq" %%h in (' %FileJson% ') do set JsonFileSize=%%~zh
 	REM If wget could not connect file size is 0 bytes. 100 bytes threshold will include small error messages.S
-	if !JsonFileSize! LEQ 1000  (
+	if !JsonFileSize! LEQ 1500  (
 		echo Downloadin Json file from https^:^/^/api.spot-hinta.fi FAILED^^! 
-		call :WriteLog "Downloading Json file %FileJson% FAILED."
+		call :WriteLog "Downloading Json file %FileJson% FAILED. File size !JsonFileSize! bytes."
 	) else (
 		set "LastJsonUpdate=%DateString%"
 	)
@@ -380,14 +380,14 @@ if "!DateString!" == "!LastJsonUpdate!" (
 	REM Get %FileJson% file size in bytes.
 	for /F "usebackq" %%h in (' %FileJson%.temp ') do set JsonFileSize=%%~zh
 	REM If wget could not connect file size is 0 bytes. 100 bytes threshold will include small error messages.S
-	if !JsonFileSize! LEQ 1000  (
+	if !JsonFileSize! LEQ 1500  (
 		echo Updating Json file from https^:^/^/api.spot-hinta.fi FAILED^^! 
-		call :WriteLog "Updating Json file %FileJson% FAILED."
+		call :WriteLog "Updating Json file %FileJson% FAILED. File size !JsonFileSize! bytes."
 	) else (
 		REM Downloaded Json file ok, replace old file.
 		move /Y %FileJson%.temp %FileJson%
 		echo Update successful.
-		call :WriteLog "Updating Json file %FileJson% successfull."
+		call :WriteLog "Updating Json file %FileJson% successfull. File size !JsonFileSize! bytes."
 		set LastJsonUpdate=!DateString!
 	)
 )	

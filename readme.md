@@ -10,7 +10,7 @@ Ohjelman k‰ynniss‰olo tarkistetaan 30 sekunnin v‰lein. Nykyisen p‰iv‰n ja seuraa
 
 Apuskripti hidden-price-scheduler.bat k‰ynnist‰‰ skriptin price-scheduler.bat piilotettuun ikkunaan, jolloin skripti toimii ik‰‰n kuin Windowsin taustapalvelu. T‰h‰n k‰ytet‰‰n ohjelmaa CMDH (https://web.archive.org/web/20190915154950/http://www.gate2.net:80/tools/cmdh/cmdh.html).
 
-Huom! T‰m‰ skripti ei ole k‰ynyt l‰pi huolellista testausta eik‰ sit‰ pid‰ k‰ytt‰‰ mihink‰‰n vaativaan k‰yttˆˆn.
+Huom! T‰m‰ skripti ei ole k‰ynyt l‰pi huolellista testausta eik‰ sit‰ pid‰ k‰ytt‰‰ mihink‰‰n vaativaan k‰yttˆˆn. 
 
 ## Muutoksia
 
@@ -19,3 +19,5 @@ Versio 0.1: Palvelu spot-hinta.fi ei hetkellisesti vastannut, joten varapalveluk
 Versio 0.2: Hinnan tarkistaminen on koodattu uudelleen.
 
 Versio 0.3: Lis‰tty rank.
+
+Versio 0.4: Pieni‰ muutoksia mm. logitukseen.
