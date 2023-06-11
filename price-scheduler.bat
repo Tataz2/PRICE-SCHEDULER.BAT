@@ -2,7 +2,7 @@
 SETLOCAL EnableDelayedExpansion
 cd /D "%~dp0"
 
-REM Version 0.4
+REM Version 0.5
 
 REM Condition 1:
 REM If current electricity price is lower or equal than PriceThreshold, ConditionPrice is TRUE.
@@ -313,11 +313,11 @@ if "!PriceWithTax!" == "-1"  (
 	call :WriteLog "Got price !PriceWithTax! from api.porssisahko.net."
 )
 
-REM Check if price is valid positive number with max four decimal accuracy.
+REM Check if price is valid number with max four decimal accuracy.
 for /f "tokens=*" %%i in ('calc %PriceWithTax%*10000 ') do set PriceWithTax10000=%%i
-IF 1%PriceWithTax10000% NEQ +1%PriceWithTax10000% (
+IF %PriceWithTax10000% NEQ %PriceWithTax10000% (
 	echo Getting price failed^^!
-	call :WriteLog "Getting price failed."
+	call :WriteLog "Getting price failed. Price is valid number with four decimals."
 	set PriceWithTax=-1
 ) ELSE (
 	echo Getting price %PriceWithTax% successfull^^!

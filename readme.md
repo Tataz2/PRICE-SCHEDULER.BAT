@@ -21,3 +21,5 @@ Versio 0.2: Hinnan tarkistaminen on koodattu uudelleen.
 Versio 0.3: Lisätty rank.
 
 Versio 0.4: Pieniä muutoksia mm. logitukseen.
+
+Versio 0.5: Korjattu ongelma negatiivisten hintojen kanssa.
