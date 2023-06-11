@@ -317,7 +317,7 @@ REM Check if price is valid number with max four decimal accuracy.
 for /f "tokens=*" %%i in ('calc %PriceWithTax%*10000 ') do set PriceWithTax10000=%%i
 IF %PriceWithTax10000% NEQ %PriceWithTax10000% (
 	echo Getting price failed^^!
-	call :WriteLog "Getting price failed. Price is valid number with four decimals."
+	call :WriteLog "Getting price failed. Price is not valid number with four decimals."
 	set PriceWithTax=-1
 ) ELSE (
 	echo Getting price %PriceWithTax% successfull^^!
